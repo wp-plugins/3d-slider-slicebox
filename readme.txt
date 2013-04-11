@@ -24,7 +24,7 @@ activate the plugin and just add the template tag `<?php if(sb_slides_display())
 * excerpt words limitation
 * reponsive(auto compatible in all devices)
 
-Note: if anyone wants any more features kind add a topic in support.
+Note: if anyone wants any more features kindly add a topic in support.
 
 == Installation and usage ==
 
