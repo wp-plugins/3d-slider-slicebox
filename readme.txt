@@ -14,8 +14,17 @@ License:GPLv2 or later
 
 3D Slider Slice Box is responsive 3d slider which enables you to create 3d slider without the use of flash. Has plenty of options like orientation, perspective and other cuboid option which would add glitz to your site. 
 
-activate the plugin and just a
+activate the plugin and just add the template tag `<?php if(sb_slides_display()){sb_slides_display();} ?>` 
 
+<h4>Main features </h4>
+
+* change perspective to have a great view
+* orientation to change from horizontal to vertical and also random 
+* you can display posts from a category
+* excerpt words limitation
+* reponsive(auto compatible in all devices)
+
+Note: if anyone wants any more features kind add a topic in support.
 
 == Installation and usage ==
 
