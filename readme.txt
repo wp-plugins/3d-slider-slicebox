@@ -4,7 +4,7 @@ Author URI: http://profiles.wordpress.org/ezhil/
 Plugin URL: http://profiles.wordpress.org/ezhil/
 Requires at Least: 3.0
 Tested Up To: 3.5.1
-Tags: content, featured, gallery, image, images, javascript, jquery, mobile, responsive, slider, slides, slideshow
+Tags: content, featured, gallery, image, images, javascript, jquery, mobile, responsive, slider, slides, slideshow,3D slider, 3d slideshow, flash 3d slideshow
 Stable tag: trunk
 License:GPLv2 or later
 
