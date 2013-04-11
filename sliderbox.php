@@ -3,7 +3,7 @@
 Plugin Name:3D Slider Slice Box
 Plugin URI: http://wordpress.org/extend/plugins/3d-slider-slicebox/
 Description: 3D Slider Slice Box is responsive 3d slider which enables you to create 3d slider without the use of flash.
-Author: Ezhil
+Author:ezhil
 Version: 1.0
 Author URI: http://profiles.wordpress.org/ezhil/
 License: GPLv2 or later

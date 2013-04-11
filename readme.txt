@@ -1,5 +1,5 @@
 === 3D Slider Slice Box ===
-Contributors: Ezhil
+Contributors:ezhil
 Author URI: http://profiles.wordpress.org/ezhil/
 Plugin URL: http://wordpress.org/extend/plugins/3d-slider-slicebox/
 Requires at Least: 3.0
