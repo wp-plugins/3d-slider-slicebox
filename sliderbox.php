@@ -3,8 +3,8 @@
 Plugin Name:3D Slider Slice Box
 Plugin URI: http://wordpress.org/extend/plugins/3d-slider-slicebox/
 Description: 3D Slider Slice Box is responsive 3d slider which enables you to create 3d slider without the use of flash.
-Author:ezhil
-Version: 1.0
+Author: Ezhil
+Version: 1.1
 Author URI: http://profiles.wordpress.org/ezhil/
 License: GPLv2 or later
 */
@@ -27,14 +27,38 @@ function sb_excerpt($limit) {
       $excerpt = preg_replace('`\[[^\]]*\]`','',$excerpt);
       return $excerpt;
     }
+/*
+ * value to array converter
+ */
+function sb_arr_gen($val)
+{
+	$dataPoints = array();  
+    $dataPoint = array();  
+	for($i=1;$i<=$val;$i++)
+	{
+	$dataPoint = array(	$tock['atr'.$i] = array('link'.$i,'name'.$i,'perma'.$i));
+	$dataPoints = array_merge($dataPoints,$dataPoint);	
+	}
+	return $dataPoints;
+}
+//var_dump(sb_arr_gen(5));
+$thevalue = get_option( 'sb_controls', $sb_controls );
+if(empty($thevalue['no_of_slides']))
+{
+	$exval ='5';
+	
+}else {$exval = $thevalue['no_of_slides'];}
+//$sb_controls  =  sb_arr_gen($exval);   
+    
 /* 
  * declare option in array
  * $sb_controls in the only registered settings option
  * 
  */
 $sb_controls =  array('no_of_slides' => '' ,'slide_type' => '','slide_category' => '','slide_excerpt' => '','slide_excerptlength' => '','slide_width' => '',
-'slide_orientation' => '','slide_cuboidsRandom' => '','slide_cuboidsCount' => '','slide_speed' => '','slide_disperseFactor' => '','slide_autoplay' => '','slide_interval' => '','slide_perspective' => '');
-
+'slide_orientation' => '','slide_cuboidsRandom' => '','slide_cuboidsCount' => '','slide_speed' => '','slide_disperseFactor' => '','slide_autoplay' => '',
+'slide_interval' => '','slide_perspective' => '','slide_option'=>'');
+$sb_controls['slide_imgs'] = sb_arr_gen($exval);
 /*
  * Register settings options
  */
@@ -78,14 +102,97 @@ function sb_slide_options() {
 <?php $settings = get_option( 'sb_controls', $sb_controls )?>
 <?php settings_fields( 'sb_slider_options' );?>
 <style>
-.rctable input[text]{
-width:200px;float:left;margin-right:25px;
+.imgon th,.imgon td{
+background:#eee;padding:15px 25px;border-bottom:1px solid #ddd;
 }
+#imgoff th, #imgoff td, #imgoff1 th, #imgoff1 td, #imgoff2 th, #imgoff2 td{background:#eee;padding:15px 25px;border-bottom:1px solid #ddd;}
+.imgon input{margin-bottom:5px;
+    padding: 6px;
+    width: 500px; }
 </style>
 <table class="form-table rctable"><!-- Grab a hot cup of coffee, yes we're using tables! -->
+<!-- choose options -->
+<tr valign="top"><th scope="row"><label for="sb_controls[slide_option]"><h3 style="margin: 0px;">Choose option</h3></label></th>
+<td>
+<select id="sb_controls[slide_option]"  name="sb_controls[slide_option]" onchange="graboption()">
+  <option value="posts" <?php selected( $settings['slide_option'], posts ); ?>>From posts</option>
+  <option value="imgs" <?php selected($settings['slide_option'], imgs ); ?>>From images</option>
+</select>
+<script type="text/javascript">
+
+function graboption()
+{
+var curval = document.getElementById('sb_controls[slide_option]');
+var curval1 = curval.options[curval.selectedIndex].value;
+if(curval1 == 'imgs')
+{
+document.getElementById('sldtitle').innerHTML = 'Enter slide images';	
+document.getElementById('imgoff').style.display = 'none';
+<?php $imgval = count($sb_controls['slide_imgs']);for ($i=0;$i<=$imgval;$i++){ ?>
+document.getElementsByClassName('imgon')[<?php echo $i; ?>].setAttribute('style','');
+<?php } ?>
+}else if(curval1 == 'posts')
+{
+	document.getElementById('sldtitle').innerHTML = 'Select slide category';
+	document.getElementById('imgoff').setAttribute('style','');	
+	<?php $imgval = count($sb_controls['slide_imgs']);for ($i=0;$i<=$imgval;$i++){ ?>
+	document.getElementsByClassName('imgon')[<?php echo $i; ?>].style.display = 'none';
+	<?php } ?>
+}
+
+}
+</script>
+</td>
+</tr>
+<!-- no of slides -->
 <tr valign="top"><th scope="row"><label for="sb_controls[no_of_slides]"><h3 style="margin: 0px;">No of Slides</h3></label></th>
 <td>
 <input placeholder="enter only numbers" title="enter only numbers" pattern="[0-9]*" id="sb_controls[no_of_slides]" name="sb_controls[no_of_slides]" type="text" value="<?php  esc_attr_e($settings['no_of_slides']); ?>" /></td>
+</tr>
+
+<!-- entry title  -->
+<tr  valign="top">
+<th scope="row"><h2 id="sldtitle" style="width: 290px;">Enter the slide images</h2></th>
+</tr>
+
+<?php foreach ($sb_controls['slide_imgs'] as $i=> $lnval) { ?>
+<tr style="<?php if ($settings['slide_option'] == 'posts'){echo "display:none;";} ?>" class="imgon"><th scope="row"><label for="sb_controls[slide_imgs]"><h3 style="margin: 0px;">Slide <?php echo $i;?></h3></label></th>
+<td>
+<input placeholder="Image Source : enter the link" id="<?php echo  $lnval[0]?>" name="sb_controls[<?php echo  $lnval[0]?>]" type="text" value="<?php  esc_attr_e($settings[$lnval[0]]); ?>" />
+<br>
+<input placeholder="Image Caption : enter the text" id="<?php echo  $lnval[1]?>" name="sb_controls[<?php echo  $lnval[1]?>]" type="text" value="<?php  esc_attr_e($settings[$lnval[1]]); ?>" />
+<br>
+<input placeholder="Link URL : enter the url" id="<?php echo  $lnval[2]?>" name="sb_controls[<?php echo  $lnval[2]?>]" type="text" value="<?php  esc_attr_e($settings[$lnval[2]]); ?>" />
+</td>
+</tr>
+<?php } ?>
+<!-- select category  -->
+<tr style="<?php if (strip_tags($settings['slide_option']) == 'imgs'){echo "display:none;";} ?>" id="imgoff" valign="top"><th scope="row"><label for="sb_controls[slide_category]"><h3 style="margin: 0px;">Select post category</h3></label></th>
+<td>
+<select id="sb_controls[slide_category]"  name="sb_controls[slide_category]" >
+<?php $slide_cat = get_categories();
+foreach ($slide_cat as $i)
+{?>
+<option value="<?php echo $i->cat_ID; ?>" <?php selected( $settings['slide_category'], $i->cat_ID ); ?>><?php echo $i->name; ?></option>
+<?php }
+?>
+</select>
+</td>
+</tr>
+
+<!-- show excerpt  -->
+<tr id="imgoff1" valign="top"><th scope="row"><label for="sb_controls[slide_excerpt]"><h3 style="margin: 0px;">Show excerpt</h3></label></th>
+<td><input id="sb_controls[slide_excerpt]" name="sb_controls[slide_excerpt]" type="checkbox" value="show" <?php checked( show == $settings['slide_excerpt'] ); ?>" /></td>
+</tr>
+<!-- Excerpt length -->
+<tr id="imgoff2" valign="top"><th scope="row"><label for="sb_controls[slide_excerptlength]"><h3 style="margin: 0px;">Excerpt length</h3></label></th>
+<td>
+<input placeholder="default is 30" title="no of words in description, works only when show excerpt in on" pattern="[0-9]*" id="sb_controls[slide_excerptlength]" name="sb_controls[slide_excerptlength]" type="text" value="<?php  esc_attr_e($settings['slide_excerptlength']); ?>" /></td>
+</tr>
+
+<!-- entry title  -->
+<tr  valign="top">
+<th scope="row"><h2 style="width: 290px;">Slider effects options</h2></th>
 </tr>
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_width]"><h3 style="margin: 0px;">Slider width</h3></label></th>
 <td>
@@ -99,29 +206,6 @@ width:200px;float:left;margin-right:25px;
   <option value="type2" <?php selected($settings['slide_type'], type2 ); ?>>Type2 - Slideshow with play & pause</option>
 </select>
 </td>
-</tr>
-
-<!-- select category  -->
-<tr valign="top"><th scope="row"><label for="sb_controls[slide_category]"><h3 style="margin: 0px;">Select post category</h3></label></th>
-<td>
-<select id="sb_controls[slide_category]"  name="sb_controls[slide_category]" >
-<?php $slide_cat = get_categories();
-foreach ($slide_cat as $i)
-{?>
-<option value="<?php echo $i->cat_ID; ?>" <?php selected( $settings['slide_category'], $i->cat_ID ); ?>><?php echo $i->name; ?></option>
-<?php }
-?>
-</select>
-</td>
-</tr>
-<!-- show excerpt  -->
-<tr valign="top"><th scope="row"><label for="sb_controls[slide_excerpt]"><h3 style="margin: 0px;">Show excerpt</h3></label></th>
-<td><input id="sb_controls[slide_excerpt]" name="sb_controls[slide_excerpt]" type="checkbox" value="show" <?php checked( show == $settings['slide_excerpt'] ); ?>" /></td>
-</tr>
-<!-- Excerpt length -->
-<tr valign="top"><th scope="row"><label for="sb_controls[slide_excerptlength]"><h3 style="margin: 0px;">Excerpt length</h3></label></th>
-<td>
-<input placeholder="default is 30" title="no of words in description, works only when show excerpt in on" pattern="[0-9]*" id="sb_controls[slide_excerptlength]" name="sb_controls[slide_excerptlength]" type="text" value="<?php  esc_attr_e($settings['slide_excerptlength']); ?>" /></td>
 </tr>
 <!-- random cuboids -->
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_cuboidsRandom]"><h3 style="margin: 0px;">Random Cuboids</h3></label></th>
@@ -207,9 +291,19 @@ if ($settings['no_of_slides'])
 {
 $slideno = strip_tags($settings['no_of_slides']);
 }else {$slideno = '3';}
+if (strip_tags($settings['slide_option']) == 'imgs'){
+for($i=1;$i<=$slideno;$i++) {?>
+					<li>
+						<a href="<?php echo strip_tags($settings['perma'.$i]); ?>" target="_blank"><img src="<?php echo strip_tags($settings['link'.$i]); ?>" /></a>
+						<div class="sb-description">
+							<h3><?php echo strip_tags($settings['name'.$i]); ?></h3>
+						</div>
+					</li>
+<?php } } else if (strip_tags($settings['slide_option']) == 'posts')
+{
 if ($settings['slide_category'])
 {
-$slidecat = $settings['slide_category'];
+$slidecat = strip_tags($settings['slide_category']);
 }else {$slidecat = '1';}
 global $post;
 $args = array( 'numberposts' => $slideno, 'category' => $slidecat );
@@ -226,7 +320,9 @@ foreach( $myposts as $post ) :	setup_postdata($post);?>
                             </span>
 						</div>
 					</li>
-<?php endforeach; ?>
+<?php endforeach; 
+} // for posts
+?>
 				</ul>
 				<div id="shadow" class="shadow"></div>
 				<div id="nav-arrows" class="nav-arrows">
@@ -272,7 +368,7 @@ foreach( $myposts as $post ) :	setup_postdata($post);?>
 								$shadow.show();
 
 							},
-		<?php if ($settings['slide_orientation']){$orientation = $settings['slide_orientation'];}else {$orientation = 'v';}?>
+		<?php if ($settings['slide_orientation']){$orientation = strip_tags($settings['slide_orientation']);}else {$orientation = 'v';}?>
 							orientation : '<?php echo $orientation; ?>',
 							<?php if ($settings['slide_cuboidsRandom'] == 'show'){?> cuboidsRandom : true, <?php }?>
 		<?php if ($settings['slide_cuboidsCount']){$cuboidsCount = strip_tags($settings['slide_cuboidsCount']);}else {$cuboidsCount = '3';}?>

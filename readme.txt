@@ -18,11 +18,12 @@ activate the plugin and just add the template tag `<?php if(sb_slides_display())
 
 <h4>Main features </h4>
 
+* choose posts or enter images manually
 * change perspective to have a great view
 * orientation to change from horizontal to vertical and also random 
 * you can display posts from a category
 * excerpt words limitation
-* reponsive(auto compatible in all devices)
+* responsive(auto compatible in all devices)
 
 Note: if anyone wants any more features kindly add a topic in support.
 
@@ -34,6 +35,11 @@ Note: if anyone wants any more features kindly add a topic in support.
  - Select other slider properties for extensive usage.
  - The width and height of the images should be even for the slider to work properly.
 
+== Changelog ==
+ 
+ = 1.1 =
+ * options for manually adding images rather than from posts
+ * fixed xss vulnerablities
 
  
  == Screenshots ==
