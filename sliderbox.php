@@ -128,6 +128,8 @@ if(curval1 == 'imgs')
 {
 document.getElementById('sldtitle').innerHTML = 'Enter slide images';	
 document.getElementById('imgoff').style.display = 'none';
+document.getElementById('imgoff1').style.display = 'none';
+document.getElementById('imgoff2').style.display = 'none';
 <?php $imgval = count($sb_controls['slide_imgs']);for ($i=0;$i<=$imgval;$i++){ ?>
 document.getElementsByClassName('imgon')[<?php echo $i; ?>].setAttribute('style','');
 <?php } ?>
@@ -135,9 +137,12 @@ document.getElementsByClassName('imgon')[<?php echo $i; ?>].setAttribute('style'
 {
 	document.getElementById('sldtitle').innerHTML = 'Select slide category';
 	document.getElementById('imgoff').setAttribute('style','');	
+	document.getElementById('imgoff1').setAttribute('style','');
+	document.getElementById('imgoff2').setAttribute('style','');
 	<?php $imgval = count($sb_controls['slide_imgs']);for ($i=0;$i<=$imgval;$i++){ ?>
 	document.getElementsByClassName('imgon')[<?php echo $i; ?>].style.display = 'none';
 	<?php } ?>
+	
 }
 
 }
@@ -156,7 +161,7 @@ document.getElementsByClassName('imgon')[<?php echo $i; ?>].setAttribute('style'
 </tr>
 
 <?php foreach ($sb_controls['slide_imgs'] as $i=> $lnval) { ?>
-<tr style="<?php if ($settings['slide_option'] == 'posts'){echo "display:none;";} ?>" class="imgon"><th scope="row"><label for="sb_controls[slide_imgs]"><h3 style="margin: 0px;">Slide <?php echo $i;?></h3></label></th>
+<tr style="<?php if ($settings['slide_option'] == 'posts'){echo "display:none;";} ?>" class="imgon"><th scope="row"><label for="sb_controls[slide_imgs]"><h3 style="margin: 0px;">Slide <?php echo $i+1;?></h3></label></th>
 <td>
 <input placeholder="Image Source : enter the link" id="<?php echo  $lnval[0]?>" name="sb_controls[<?php echo  $lnval[0]?>]" type="text" value="<?php  esc_attr_e($settings[$lnval[0]]); ?>" />
 <br>
@@ -181,11 +186,11 @@ foreach ($slide_cat as $i)
 </tr>
 
 <!-- show excerpt  -->
-<tr id="imgoff1" valign="top"><th scope="row"><label for="sb_controls[slide_excerpt]"><h3 style="margin: 0px;">Show excerpt</h3></label></th>
+<tr style="<?php if (strip_tags($settings['slide_option']) == 'imgs'){echo "display:none;";} ?>" id="imgoff1" valign="top"><th scope="row"><label for="sb_controls[slide_excerpt]"><h3 style="margin: 0px;">Show excerpt</h3></label></th>
 <td><input id="sb_controls[slide_excerpt]" name="sb_controls[slide_excerpt]" type="checkbox" value="show" <?php checked( show == $settings['slide_excerpt'] ); ?>" /></td>
 </tr>
 <!-- Excerpt length -->
-<tr id="imgoff2" valign="top"><th scope="row"><label for="sb_controls[slide_excerptlength]"><h3 style="margin: 0px;">Excerpt length</h3></label></th>
+<tr style="<?php if (strip_tags($settings['slide_option']) == 'imgs'){echo "display:none;";} ?>" id="imgoff2" valign="top"><th scope="row"><label for="sb_controls[slide_excerptlength]"><h3 style="margin: 0px;">Excerpt length</h3></label></th>
 <td>
 <input placeholder="default is 30" title="no of words in description, works only when show excerpt in on" pattern="[0-9]*" id="sb_controls[slide_excerptlength]" name="sb_controls[slide_excerptlength]" type="text" value="<?php  esc_attr_e($settings['slide_excerptlength']); ?>" /></td>
 </tr>
