@@ -33,8 +33,10 @@ See <a href="http://tympanus.net/Development/Slicebox/">Demo</a>
 Note: if anyone wants any more features kindly add a topic in support.
 
 <h4>My other plugins</h4>
-<a href="http://wordpress.org/extend/plugins/custom-right-click-menu/">Custom right click menu</a> : define your own right click context menu for copyright and other issues </br>
+<a href="http://wordpress.org/extend/plugins/custom-right-click-menu/">Custom right click menu</a> : define your own right click context menu for copyright and other issues 
+
 <a href="http://wordpress.org/extend/plugins/custom-right-click-menu/">Gamma Gallery</a> : a stylish responsive image gallery for wordpress. It comes with a great full screen view and options for slideshow play/pause and automatically enhances itself to any resolution.
+
 
 == Installation and usage ==
 
