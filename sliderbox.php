@@ -4,18 +4,13 @@ Plugin Name:3D Slider Slice Box
 Plugin URI: http://wordpress.org/extend/plugins/3d-slider-slicebox/
 Description: 3D Slider Slice Box is responsive 3d slider which enables you to create 3d slider without the use of flash.
 Author: Ezhil
-Version: 1.1
+Version: 1.2
 Author URI: http://profiles.wordpress.org/ezhil/
 License: GPLv2 or later
 */
-$site_url = get_option('siteurl');
-   $temp_url = get_template_directory_uri();
-   define('SITE_URL', $site_url );
-   define('TEMP_URL', $temp_url );
-   $site_name = parse_url(SITE_URL, PHP_URL_HOST);
-   define('SITE_NAME', $site_name );
 
-  // limit excerpt
+global $sb_controls;
+// limit excerpt
 function sb_excerpt($limit) {
       $excerpt = explode(' ', get_the_excerpt(), $limit);
       if (count($excerpt)>=$limit) {
@@ -115,8 +110,8 @@ background:#eee;padding:15px 25px;border-bottom:1px solid #ddd;
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_option]"><h3 style="margin: 0px;">Choose option</h3></label></th>
 <td>
 <select id="sb_controls[slide_option]"  name="sb_controls[slide_option]" onchange="graboption()">
-  <option value="posts" <?php selected( $settings['slide_option'], posts ); ?>>From posts</option>
-  <option value="imgs" <?php selected($settings['slide_option'], imgs ); ?>>From images</option>
+  <option value="posts" <?php selected( $settings['slide_option'], 'posts' ); ?>>From posts</option>
+  <option value="imgs" <?php selected($settings['slide_option'], 'imgs' ); ?>>From images</option>
 </select>
 <script type="text/javascript">
 
@@ -187,7 +182,7 @@ foreach ($slide_cat as $i)
 
 <!-- show excerpt  -->
 <tr style="<?php if (strip_tags($settings['slide_option']) == 'imgs'){echo "display:none;";} ?>" id="imgoff1" valign="top"><th scope="row"><label for="sb_controls[slide_excerpt]"><h3 style="margin: 0px;">Show excerpt</h3></label></th>
-<td><input id="sb_controls[slide_excerpt]" name="sb_controls[slide_excerpt]" type="checkbox" value="show" <?php checked( show == $settings['slide_excerpt'] ); ?>" /></td>
+<td><input id="sb_controls[slide_excerpt]" name="sb_controls[slide_excerpt]" type="checkbox" value="show" <?php if (isset($settings['slide_excerpt'])){ checked( 'show' == $settings['slide_excerpt'] );} ?>" /></td>
 </tr>
 <!-- Excerpt length -->
 <tr style="<?php if (strip_tags($settings['slide_option']) == 'imgs'){echo "display:none;";} ?>" id="imgoff2" valign="top"><th scope="row"><label for="sb_controls[slide_excerptlength]"><h3 style="margin: 0px;">Excerpt length</h3></label></th>
@@ -207,14 +202,14 @@ foreach ($slide_cat as $i)
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_type]"><h3 style="margin: 0px;">Slider Navigation</h3></label></th>
 <td>
 <select id="sb_controls[slide_type]"  name="sb_controls[slide_type]" >
-  <option value="type1" <?php selected( $settings['slide_type'], type1 ); ?>>Type1 - Slideshow with dots</option>
-  <option value="type2" <?php selected($settings['slide_type'], type2 ); ?>>Type2 - Slideshow with play & pause</option>
+  <option value="type1" <?php selected( $settings['slide_type'], 'type1' ); ?>>Type1 - Slideshow with dots</option>
+  <option value="type2" <?php selected($settings['slide_type'], 'type2' ); ?>>Type2 - Slideshow with play & pause</option>
 </select>
 </td>
 </tr>
 <!-- random cuboids -->
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_cuboidsRandom]"><h3 style="margin: 0px;">Random Cuboids</h3></label></th>
-<td><input id="sb_controls[slide_cuboidsRandom]" name="sb_controls[slide_cuboidsRandom]" type="checkbox" value="show" <?php checked( show == $settings['slide_cuboidsRandom'] ); ?>" /></td>
+<td><input id="sb_controls[slide_cuboidsRandom]" name="sb_controls[slide_cuboidsRandom]" type="checkbox" value="show" <?php if (isset($settings['slide_cuboidsRandom'])){ checked( 'show' == $settings['slide_cuboidsRandom'] );} ?>" /></td>
 </tr>
 <!-- cuboidsCount -->
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_cuboidsCount]"><h3 style="margin: 0px;">Cuboids Count</h3></label></th>
@@ -223,7 +218,7 @@ foreach ($slide_cat as $i)
 </tr>
 <!-- auto play -->
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_autoplay]"><h3 style="margin: 0px;">Auto play</h3></label></th>
-<td><input id="sb_controls[slide_autoplay]" name="sb_controls[slide_autoplay]" type="checkbox" value="show" <?php checked( show == $settings['slide_autoplay'] ); ?>" /></td>
+<td><input id="sb_controls[slide_autoplay]" name="sb_controls[slide_autoplay]" type="checkbox" value="show" <?php if (isset($settings['slide_autoplay'])){ checked( 'show' == $settings['slide_autoplay'] );} ?>" /></td>
 </tr>
 <!-- interval -->
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_interval]"><h3 style="margin: 0px;">Slide Interval</h3></label></th>
@@ -249,9 +244,9 @@ foreach ($slide_cat as $i)
 <tr valign="top"><th scope="row"><label for="sb_controls[slide_orientation]"><h3 style="margin: 0px;">Orientation</h3></label></th>
 <td>
 <select id="sb_controls[slide_orientation]"  name="sb_controls[slide_orientation]" >
-  <option value="h" <?php selected( $settings['slide_orientation'], h ); ?>>Horizontal</option>
-  <option value="v" <?php selected($settings['slide_orientation'], v ); ?>>Vertical</option>
-  <option value="r" <?php selected($settings['slide_orientation'], r ); ?>>Random</option>
+  <option value="h" <?php selected( $settings['slide_orientation'], 'h' ); ?>>Horizontal</option>
+  <option value="v" <?php selected($settings['slide_orientation'], 'v' ); ?>>Vertical</option>
+  <option value="r" <?php selected($settings['slide_orientation'], 'r' ); ?>>Random</option>
 </select>
 </td>
 </tr>

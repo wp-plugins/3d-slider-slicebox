@@ -16,6 +16,11 @@ License:GPLv2 or later
 
 activate the plugin and just add the template tag `<?php if(sb_slides_display()){sb_slides_display();} ?>` 
 
+This plugin was based on the tutorial from codrops  
+<a href="http://tympanus.net/codrops/2011/09/05/slicebox-3d-image-slider/">http://tympanus.net/codrops/2011/09/05/slicebox-3d-image-slider/</a>
+
+See <a href="http://tympanus.net/Development/Slicebox/">Demo</a>
+
 <h4>Main features </h4>
 
 * choose posts or enter images manually
@@ -41,6 +46,8 @@ Note: if anyone wants any more features kindly add a topic in support.
  * options for manually adding images rather than from posts
  * fixed xss vulnerablities
 
+ = 1.2 =
+ * fixed notices generated in debug mode
  
  == Screenshots ==
 
