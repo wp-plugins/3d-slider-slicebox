@@ -4,7 +4,7 @@ Plugin Name:3D Slider Slice Box
 Plugin URI: http://wordpress.org/extend/plugins/3d-slider-slicebox/
 Description: 3D Slider Slice Box is responsive 3d slider which enables you to create 3d slider without the use of flash.
 Author: Ezhil
-Version: 1.2
+Version: 1.3
 Author URI: http://profiles.wordpress.org/ezhil/
 License: GPLv2 or later
 */
@@ -313,7 +313,7 @@ foreach( $myposts as $post ) :	setup_postdata($post);?>
 						<a href="<?php the_permalink(); ?>" target="_blank"><?php if ( has_post_thumbnail() ) {   the_post_thumbnail();}?></a>
 						<div class="sb-description">
 							<h3><?php the_title();?></h3>
-							<span><?php if ($settings['slide_excerpt'])
+							<span><?php if (isset($settings['slide_excerpt']))
                                            {
                                           if ($settings['slide_excerptlength']){echo sb_excerpt(strip_tags($settings['slide_excerptlength']));}else {echo sb_excerpt(20); }
                                            } ?>
@@ -370,7 +370,7 @@ foreach( $myposts as $post ) :	setup_postdata($post);?>
 							},
 		<?php if ($settings['slide_orientation']){$orientation = strip_tags($settings['slide_orientation']);}else {$orientation = 'v';}?>
 							orientation : '<?php echo $orientation; ?>',
-							<?php if ($settings['slide_cuboidsRandom'] == 'show'){?> cuboidsRandom : true, <?php }?>
+							<?php if (isset($settings['slide_cuboidsRandom']) &&  $settings['slide_cuboidsRandom'] == 'show'){?> cuboidsRandom : true, <?php }?>
 		<?php if ($settings['slide_cuboidsCount']){$cuboidsCount = strip_tags($settings['slide_cuboidsCount']);}else {$cuboidsCount = '3';}?>
 		cuboidsCount : '<?php echo $cuboidsCount; ?>',
 		<?php if ($settings['slide_speed']){$speed =  strip_tags($settings['slide_speed']);}else {$speed = '600';}?>
@@ -381,7 +381,7 @@ foreach( $myposts as $post ) :	setup_postdata($post);?>
 		interval : '<?php echo $interval; ?>',
 		<?php if ($settings['slide_perspective']){$perspective =  strip_tags($settings['slide_perspective']);}else {$perspective = '1200';}?>
 		perspective : '<?php echo $perspective; ?>',					
-		<?php if ($settings['slide_autoplay'] == 'show'){?> autoplay : true, <?php }?>
+		<?php if (isset($settings['slide_autoplay']) && $settings['slide_autoplay'] == 'show'){?> autoplay : true, <?php }?>
 
 							<?php if ($settings['slide_type'] == 'type1'){?>
 							onBeforeChange : function( pos ) {
